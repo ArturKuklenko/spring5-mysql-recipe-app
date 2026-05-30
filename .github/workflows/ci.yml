@@ -31,4 +31,8 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          git-service-token: ${{ secrets.GITHUB_TOKEN }} # Надає Codecov доступ до читання файлів репозиторію
           files: '**/target/site/jacoco/jacoco.xml'
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true # Дозволить побачити детальні логи зіставлення шляхів, якщо щось піде не так
