@@ -1,7 +1,10 @@
 name: Run tests and upload coverage
 
 on:
-  push
+  push:
+    branches:
+      - '*'
+      - '**/*'
 
 jobs:
   test:
@@ -13,16 +16,19 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+          cache: 'maven'
 
-      - name: Install dependencies
-        run: go mod download
+      - name: Build and run tests with Maven
+        run: mvn clean test
 
-      - name: Run tests
-        run: go test -coverprofile=coverage.txt
-
-      - name: Upload results to Codecov
+      # 6. Завантажуємо згенерований звіт на Codecov.io
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: '**/target/site/jacoco/jacoco.xml'
