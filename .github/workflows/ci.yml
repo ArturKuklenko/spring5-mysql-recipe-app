@@ -25,4 +25,4 @@ jobs:
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.261ee912-19c3-4187-8e76-a30d0e0b8c5a }}
+          token: ${{ secrets.CODECOV_TOKEN }}
